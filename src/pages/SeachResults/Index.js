@@ -1,27 +1,21 @@
 import React from 'react'
-import { link } from "wouter"
+import ListOfGifs from '../../components/ListOfGifs/Index'
+import useGifs from '../../hooks/useGifs'
+import Spinner from '../../components/Spinner'
 
+export default function SearchResults({params}) {
+   
+    const { keyword } = params
+    const {loading, gifs} = useGifs({keyword})
 
-const POPULAR_GIFS = ["matrix", "rick", "morty"]
-
-export default function Home() {
-
-    const [keyword, setKeyword] = useState('')
 
     return (
-        <>
-            <h3 className="App-title">
-                Los Gifs más populares
-        </h3>
-            <ul>
-                {POPULAR_GIFS.map((popularGif) => (
-                    <li key={puplarGif}>
-                        <Link to={`/search/${popularGif}`}>
-                            Gifs de {popularGif}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-        </>
+        <div>
+          {
+              loading
+              ? <Spinner/>
+              : <ListOfGifs gifs={gifs}/>
+          }  
+        </div>
     )
 }
